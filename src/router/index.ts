@@ -1,37 +1,53 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import MainLayout from '@/layouts/MainLayout.vue'
 
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import('@/pages/Home.vue'),
-    meta: { requiresAuth: false }
-  },
+  // 登录页（无布局）
   {
     path: '/login',
     name: 'login',
     component: () => import('@/pages/Login.vue'),
     meta: { requiresAuth: false }
   },
-  // 需要登录的路由
+
+  // 需要认证的页面（使用主布局）
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('@/pages/Dashboard.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/courses',
-    name: 'courses',
-    component: () => import('@/pages/courses/CourseList.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/courses/:id',
-    name: 'course-detail',
-    component: () => import('@/pages/courses/CourseDetail.vue'),
-    meta: { requiresAuth: true }
+    path: '/',
+    component: MainLayout,
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import('@/pages/Home.vue')
+      },
+      {
+        path: 'courses',
+        name: 'courses',
+        component: () => import('@/pages/courses/CourseList.vue')
+      },
+      {
+        path: 'courses/:id',
+        name: 'course-detail',
+        component: () => import('@/pages/courses/CourseDetail.vue')
+      },
+      {
+        path: 'courses/:id/learn',
+        name: 'course-learn',
+        component: () => import('@/pages/courses/Learn.vue')
+      },
+      {
+        path: 'profile',
+        name: 'profile',
+        component: () => import('@/pages/Profile.vue')
+      },
+      {
+        path: 'messages',
+        name: 'messages',
+        component: () => import('@/pages/Messages.vue')
+      }
+    ]
   }
 ]
 
