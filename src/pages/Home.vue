@@ -69,7 +69,7 @@ function goToMessages() {
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-xl font-bold text-foreground">
-            你好，{{ authStore.user?.real_name || authStore.user?.username || '学员' }}
+            你好，{{ authStore.user?.full_name || authStore.user?.username || '学员' }}
           </h1>
           <p class="text-sm text-muted-foreground mt-0.5">今天继续学习吧</p>
         </div>

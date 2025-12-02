@@ -56,10 +56,16 @@ const router = createRouter({
   routes
 })
 
-// 路由守卫
-router.beforeEach((to, _from, next) => {
-  const token = localStorage.getItem('access_token')
+// 路由守卫（开发模式下禁用认证）
+const DEV_SKIP_AUTH = true // TODO: 上线前改为 false
 
+router.beforeEach((to, _from, next) => {
+  if (DEV_SKIP_AUTH) {
+    next()
+    return
+  }
+
+  const token = localStorage.getItem('access_token')
   if (to.meta.requiresAuth && !token) {
     next({ name: 'login' })
   } else {
